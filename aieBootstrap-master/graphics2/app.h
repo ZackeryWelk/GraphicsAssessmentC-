@@ -3,6 +3,8 @@
 #include "Shader.h"
 #include <Application.h>
 #include <Gizmos.h>
+#include "OBJMesh.h"
+
 class App : public aie::Application
 {
 public:
@@ -21,8 +23,13 @@ protected:
 	glm::mat4 m_projectionMatrix;
 
 	aie::ShaderProgram	m_shader;
+
 	Mesh				m_quadMesh;
 	glm::mat4			m_quadTransform;
+
+
+	//aie::OBJMesh		m_bunnyMesh;
+	//glm::mat4			m_bunnyTransform;
 };
 
 
