@@ -19,7 +19,7 @@ bool App::startup()
 	aie::Gizmos::create(10000, 10000, 10000, 10000);
 
 	//create simple camera transforms
-	m_viewMatrix = glm::lookAt(/*moving forward and back*/glm::vec3(10), /*xyz of the camera*/glm::vec3(0,0,0), /*rotation of cam*/glm::vec3(0, 1, 0)); /*(70) (0,45,0) (0,1,0) for the spear*/
+	m_viewMatrix = glm::lookAt(/*moving forward and back*/glm::vec3(70), /*xyz of the camera*/glm::vec3(0,45,0), /*rotation of cam*/glm::vec3(0, 1, 0)); /*(70)(0,45,0)(0,1,0) for the spear / (10)(0,0,0)(0,1,0) for quad*/
 	m_projectionMatrix = glm::perspective(glm::pi<float>() * 0.25f, getWindowWidth() / (float)getWindowHeight(), 0.1f, 1000.f);
 
 	//simple
@@ -125,8 +125,8 @@ void App::draw()
 
 
 	//draw things here
-//	m_spearMesh.draw();
-	m_quadMesh.draw();
+	m_spearMesh.draw();
+//	m_quadMesh.draw();
 
 
 

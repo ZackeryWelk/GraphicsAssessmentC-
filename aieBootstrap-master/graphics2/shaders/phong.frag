@@ -3,7 +3,8 @@
 
 in vec4 vPosition;
 in vec3 vNormal;
-in vec3 cameraPosition;
+
+uniform vec3 cameraPosition;
 
 uniform vec3 Ka;	//ambient material colour
 uniform vec3 Kd;	//diffuse material colour
