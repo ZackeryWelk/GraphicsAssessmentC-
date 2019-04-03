@@ -46,13 +46,13 @@ protected:
 	Light				m_light;
 	glm::vec3			m_ambientLight;
 
-	float xTest;
-	float yTest;
-	float zTest;
+	float xEye;
+	float yEye;
+	float zEye;
 
-	float xLook;
-	float yLook;
-	float zLook;
+	float xCentre;
+	float yCentre;
+	float zCentre;
 
 	float m_timer;
 };

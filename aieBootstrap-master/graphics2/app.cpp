@@ -13,13 +13,13 @@ App::~App()
 
 bool App::startup()
 {
-	xTest = 10;
-	yTest = 10;
-	zTest = 10;
+	xEye = 10;
+	yEye = 10;
+	zEye = 10;
 
-	xLook = 0;
-	yLook = 0;
-	zLook = 0;
+	xCentre = 0;
+	yCentre = 0;
+	zCentre = 0;
 
 	setBackgroundColour(0.25f, 0.25f, 0.25f);
 
@@ -61,10 +61,10 @@ bool App::startup()
 
 	m_quadTransform =
 	{
-		1,0 ,0 ,0,
-		0 ,1,0 ,0,
-		0 ,0 ,1,0,
-		0 ,0 ,0 ,1
+		1, 0 ,0 ,0,
+		0, 1 ,0 ,0,
+		0, 0 ,1 ,0,
+		0, 0 ,0 ,1
 	};
 	return true;
 }
@@ -77,53 +77,58 @@ void App::update(float deltaTime)
 {
 	aie::Input* input = aie::Input::getInstance();
 	
+	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
+	{
+		aie::Application::quit();
+	}
+
 	if (input->isKeyDown(aie::INPUT_KEY_S))
 	{
 		printf("back\n");
-		xTest += 0.2f;
-		xLook += 0.2f;
-		zTest += 0.2f;
-		zLook += 0.2f;
+		xEye += 0.2f;
+		xCentre += 0.2f;
+		zEye += 0.2f;
+		zCentre += 0.2f;
 	}
 	if (input->isKeyDown(aie::INPUT_KEY_W))
 	{
 		printf("forward\n");
-		xTest -= 0.2f;
-		xLook -= 0.2f;
-		zTest -= 0.2f;
-		zLook -= 0.2f;
+		xEye -= 0.2f;
+		xCentre -= 0.2f;
+		zEye -= 0.2f;
+		zCentre -= 0.2f;
 	}
 	if (input->isKeyDown(aie::INPUT_KEY_A))
 	{
 		printf("left\n");
-		zTest += 0.2f;
-		zLook += 0.2f;
-		xTest -= 0.2f;
-		xLook -= 0.2f;
+		zEye += 0.2f;
+		zCentre += 0.2f;
+		xEye -= 0.2f;
+		xCentre -= 0.2f;
 	}
 	if (input->isKeyDown(aie::INPUT_KEY_D))
 	{
 		printf("right\n");
-		zTest -= 0.2f;
-		zLook -= 0.2f;
-		xTest += 0.2f;
-		xLook += 0.2f;
+		zEye -= 0.2f;
+		zCentre -= 0.2f;
+		xEye += 0.2f;
+		xCentre += 0.2f;
 	}
 	if (input->isKeyDown(aie::INPUT_KEY_E))
 	{
 		printf("up\n");
-		yTest += 0.2f;
-		yLook += 0.2f;
+		yEye += 0.2f;
+		yCentre += 0.2f;
 	}
 	if (input->isKeyDown(aie::INPUT_KEY_Q))
 	{
 		printf("down\n");
-		yTest -= 0.2f;
-		yLook -= 0.2f;
+		yEye -= 0.2f;
+		yCentre -= 0.2f;
 	}
 
 	//create simple camera transforms
-	m_viewMatrix = glm::lookAt(glm::vec3(xTest,yTest,zTest), glm::vec3(xLook, yLook, zLook), glm::vec3(0, 1, 0)); /*(70)(0,45,0)(0,1,0) for the spear / (10)(0,0,0)(0,1,0) for quad*/
+	m_viewMatrix = glm::lookAt(glm::vec3(xEye,yEye,zEye), glm::vec3(xCentre, yCentre, zCentre), glm::vec3(0, 1, 0)); /*(70)(0,45,0)(0,1,0) for the spear / (10)(0,0,0)(0,1,0) for quad*/
 
 	float time = getTime();
 
