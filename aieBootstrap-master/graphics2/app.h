@@ -4,6 +4,7 @@
 #include <Application.h>
 #include <Gizmos.h>
 #include "OBJMesh.h"
+#include <Input.h>
 
 class App : public aie::Application
 {
@@ -19,6 +20,7 @@ public:
 
 
 protected:
+
 	glm::mat4 m_viewMatrix;
 	glm::mat4 m_projectionMatrix;
 
@@ -44,7 +46,15 @@ protected:
 	Light				m_light;
 	glm::vec3			m_ambientLight;
 
+	float xTest;
+	float yTest;
+	float zTest;
 
+	float xLook;
+	float yLook;
+	float zLook;
+
+	float m_timer;
 };
 
 

@@ -13,22 +13,24 @@ App::~App()
 
 bool App::startup()
 {
+	xTest = 10;
+	yTest = 10;
+	zTest = 10;
+
+	xLook = 0;
+	yLook = 0;
+	zLook = 0;
+
 	setBackgroundColour(0.25f, 0.25f, 0.25f);
 
 	//initialise gizmo primitive counts
 	aie::Gizmos::create(10000, 10000, 10000, 10000);
 
 	//create simple camera transforms
-	m_viewMatrix = glm::lookAt(/*moving forward and back*/glm::vec3(70), /*xyz of the camera*/glm::vec3(0,45,0), /*rotation of cam*/glm::vec3(0, 1, 0)); /*(70)(0,45,0)(0,1,0) for the spear / (10)(0,0,0)(0,1,0) for quad*/
-	m_projectionMatrix = glm::perspective(glm::pi<float>() * 0.25f, getWindowWidth() / (float)getWindowHeight(), 0.1f, 1000.f);
+	m_viewMatrix = glm::lookAt(glm::vec3(10), glm::vec3(0,5,0), glm::vec3(0, 1, 0)); /*(70)(0,45,0)(0,1,0) for the spear / (10)(0,0,0)(0,1,0) for quad*/
+//	m_projectionMatrix = glm::perspective(glm::pi<float>() * 0.25f, getWindowWidth() / (float)getWindowHeight(), 0.1f, 1000.f);
 
-	//simple
-	m_shader.loadShader(aie::eShaderStage::VERTEX, "./shaders/simple.vert");
-	m_shader.loadShader(aie::eShaderStage::FRAGMENT, "./shaders/simple.frag");
-	//texture
-	m_shader.loadShader(aie::eShaderStage::VERTEX, "./shaders/textured.vert");
-	m_shader.loadShader(aie::eShaderStage::FRAGMENT, "./shaders/textured.frag");
-	//light
+	//shader
 	m_shader.loadShader(aie::eShaderStage::VERTEX, "./shaders/phong.vert");
 	m_shader.loadShader(aie::eShaderStage::FRAGMENT, "./shaders/phong.frag");
 	
@@ -55,21 +57,13 @@ bool App::startup()
 	m_light.specular = { 1,1,0 };
 	m_ambientLight = { 0.25f,0.25f,0.25f };
 
-
-	m_spearTransform = {
-		1,0,0,0,
-		0,1,0,0,
-		0,0,1,0,
-		0,0,0,1
-	};
-
 	m_quadMesh.initialiseQuad();
 
 	m_quadTransform =
 	{
-		10,0 ,0 ,0,
-		0 ,10,0 ,0,
-		0 ,0 ,10,0,
+		1,0 ,0 ,0,
+		0 ,1,0 ,0,
+		0 ,0 ,1,0,
 		0 ,0 ,0 ,1
 	};
 	return true;
@@ -81,6 +75,56 @@ void App::shutdown()
 
 void App::update(float deltaTime)
 {
+	aie::Input* input = aie::Input::getInstance();
+	
+	if (input->isKeyDown(aie::INPUT_KEY_S))
+	{
+		printf("back\n");
+		xTest += 0.2f;
+		xLook += 0.2f;
+		zTest += 0.2f;
+		zLook += 0.2f;
+	}
+	if (input->isKeyDown(aie::INPUT_KEY_W))
+	{
+		printf("forward\n");
+		xTest -= 0.2f;
+		xLook -= 0.2f;
+		zTest -= 0.2f;
+		zLook -= 0.2f;
+	}
+	if (input->isKeyDown(aie::INPUT_KEY_A))
+	{
+		printf("left\n");
+		zTest += 0.2f;
+		zLook += 0.2f;
+		xTest -= 0.2f;
+		xLook -= 0.2f;
+	}
+	if (input->isKeyDown(aie::INPUT_KEY_D))
+	{
+		printf("right\n");
+		zTest -= 0.2f;
+		zLook -= 0.2f;
+		xTest += 0.2f;
+		xLook += 0.2f;
+	}
+	if (input->isKeyDown(aie::INPUT_KEY_E))
+	{
+		printf("up\n");
+		yTest += 0.2f;
+		yLook += 0.2f;
+	}
+	if (input->isKeyDown(aie::INPUT_KEY_Q))
+	{
+		printf("down\n");
+		yTest -= 0.2f;
+		yLook -= 0.2f;
+	}
+
+	//create simple camera transforms
+	m_viewMatrix = glm::lookAt(glm::vec3(xTest,yTest,zTest), glm::vec3(xLook, yLook, zLook), glm::vec3(0, 1, 0)); /*(70)(0,45,0)(0,1,0) for the spear / (10)(0,0,0)(0,1,0) for quad*/
+
 	float time = getTime();
 
 	m_light.direction = glm::normalize(glm::vec3(glm::cos(time * 2), glm::sin(time * 2), 0));
