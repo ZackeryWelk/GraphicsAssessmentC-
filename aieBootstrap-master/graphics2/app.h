@@ -35,8 +35,6 @@ protected:
 	aie::OBJMesh		m_spearMesh;
 	glm::mat4			m_spearTransform;
 
-
-
 	struct Light
 	{
 		glm::vec3 direction;
@@ -44,6 +42,7 @@ protected:
 		glm::vec3 specular;
 	};
 	Light				m_light;
+	Light				m_light2;
 	glm::vec3			m_ambientLight;
 
 	float xEye;

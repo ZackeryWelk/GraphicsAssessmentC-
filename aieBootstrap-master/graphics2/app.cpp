@@ -33,6 +33,7 @@ bool App::startup()
 	//shader
 	m_shader.loadShader(aie::eShaderStage::VERTEX, "./shaders/phong.vert");
 	m_shader.loadShader(aie::eShaderStage::FRAGMENT, "./shaders/phong.frag");
+
 	
 	if (m_shader.link() == false)
 	{
@@ -55,7 +56,12 @@ bool App::startup()
 	//light setup
 	m_light.diffuse = { 1,1,0 };
 	m_light.specular = { 1,1,0 };
-	m_ambientLight = { 0.25f,0.25f,0.25f };
+
+	m_light2.diffuse = { 0,1,0 };
+	m_light2.specular = { 1,1,0 };
+
+	m_ambientLight = { 1,1,1 };
+
 
 	m_quadMesh.initialiseQuad();
 
@@ -133,7 +139,7 @@ void App::update(float deltaTime)
 	float time = getTime();
 
 	m_light.direction = glm::normalize(glm::vec3(glm::cos(time * 2), glm::sin(time * 2), 0));
-
+	m_light2.direction = glm::vec3(-1, 0, 0);
 }
 
 void App::draw()
@@ -159,15 +165,23 @@ void App::draw()
 	m_shader.bindUniform("Is", m_light.specular);
 	m_shader.bindUniform("LightDirection", m_light.direction);
 
+	m_shader.bindUniform("Id2", m_light2.diffuse);
+	m_shader.bindUniform("Is2", m_light2.specular);
+	m_shader.bindUniform("LightDirection2", m_light2.direction);
+
+
+
 	//bind transform
 	auto pvm = m_projectionMatrix * m_viewMatrix * m_quadTransform;
 	m_shader.bindUniform("ProjectionViewModel", pvm);
 	
 	//bind transforms for lighting 
 	m_shader.bindUniform("NormalMatrix", glm::inverseTranspose(glm::mat3(m_quadTransform)));
+	
 
 	
 	m_shader.bindUniform("diffuseTexture", 0);
+	
 
 	//bind texture to a specified location
 	m_gridTexture.bind(0);
