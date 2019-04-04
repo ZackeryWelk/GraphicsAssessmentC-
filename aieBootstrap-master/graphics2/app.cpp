@@ -87,63 +87,64 @@ void App::update(float deltaTime)
 	{
 		aie::Application::quit();
 	}
-
+	//camera movement
 	if (input->isKeyDown(aie::INPUT_KEY_S))
 	{
 		printf("back\n");
-		xEye += 0.2f;
-		xCentre += 0.2f;
-		zEye += 0.2f;
-		zCentre += 0.2f;
+		xEye += 0.1f;
+		xCentre += 0.1f;
+		zEye += 0.1f;
+		zCentre += 0.1f;
 	}
 	if (input->isKeyDown(aie::INPUT_KEY_W))
 	{
 		printf("forward\n");
-		xEye -= 0.2f;
-		xCentre -= 0.2f;
-		zEye -= 0.2f;
-		zCentre -= 0.2f;
+		xEye -= 0.1f;
+		xCentre -= 0.1f;
+		zEye -= 0.1f;
+		zCentre -= 0.1f;
 	}
 	if (input->isKeyDown(aie::INPUT_KEY_A))
 	{
 		printf("left\n");
-		zEye += 0.2f;
-		zCentre += 0.2f;
-		xEye -= 0.2f;
-		xCentre -= 0.2f;
+		zEye += 0.1f;
+		zCentre += 0.1f;
+		xEye -= 0.1f;
+		xCentre -= 0.1f;
 	}
 	if (input->isKeyDown(aie::INPUT_KEY_D))
 	{
 		printf("right\n");
-		zEye -= 0.2f;
-		zCentre -= 0.2f;
-		xEye += 0.2f;
-		xCentre += 0.2f;
+		zEye -= 0.1f;
+		zCentre -= 0.1f;
+		xEye += 0.1f;
+		xCentre += 0.1f;
 	}
 	if (input->isKeyDown(aie::INPUT_KEY_E))
 	{
 		printf("up\n");
-		yEye += 0.2f;
-		yCentre += 0.2f;
+		yEye += 0.1f;
+		yCentre += 0.1f;
 	}
 	if (input->isKeyDown(aie::INPUT_KEY_Q))
 	{
 		printf("down\n");
-		yEye -= 0.2f;
-		yCentre -= 0.2f;
+		yEye -= 0.1f;
+		yCentre -= 0.1f;
 	}
-
 	//create simple camera transforms
 	m_viewMatrix = glm::lookAt(glm::vec3(xEye,yEye,zEye), glm::vec3(xCentre, yCentre, zCentre), glm::vec3(0, 1, 0)); /*(70)(0,45,0)(0,1,0) for the spear / (10)(0,0,0)(0,1,0) for quad*/
 
 	float time = getTime();
 
 	m_light.direction = glm::normalize(glm::vec3(glm::cos(time * 2), glm::sin(time * 2), 0));
-	m_light2.direction = glm::vec3(-1, 0, 0);
+	m_light2.direction = glm::vec3(1, 0, -1);
 }
 
 void App::draw()
 {
+	//bind our render target
+	m_renderTarget.bind();
 
 	//wipe the screen to the background colour
 	clearScreen();
@@ -152,7 +153,7 @@ void App::draw()
 	//update perspective in case the window is resized
 	m_projectionMatrix = glm::perspective(glm::pi<float>() * 0.25f, getWindowWidth() / (float)getWindowHeight(), 0.1f, 1000.f);
 	
-
+	
 	//bind shader
 	m_shader.bind();
 
@@ -170,14 +171,17 @@ void App::draw()
 	m_shader.bindUniform("LightDirection2", m_light2.direction);
 
 
-
 	//bind transform
 	auto pvm = m_projectionMatrix * m_viewMatrix * m_quadTransform;
 	m_shader.bindUniform("ProjectionViewModel", pvm);
 	
 	//bind transforms for lighting 
 	m_shader.bindUniform("NormalMatrix", glm::inverseTranspose(glm::mat3(m_quadTransform)));
-	
+
+	//unbind target to return to back buffer
+	m_renderTarget.unbind();
+	//clear the back buffer
+	clearScreen();
 
 	
 	m_shader.bindUniform("diffuseTexture", 0);
@@ -185,7 +189,6 @@ void App::draw()
 
 	//bind texture to a specified location
 	m_gridTexture.bind(0);
-
 
 	//draw things here
 	m_spearMesh.draw();

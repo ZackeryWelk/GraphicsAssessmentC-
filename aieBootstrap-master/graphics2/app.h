@@ -5,6 +5,8 @@
 #include <Gizmos.h>
 #include "OBJMesh.h"
 #include <Input.h>
+#include "RenderTarget.h"
+#include <iostream>
 
 class App : public aie::Application
 {
@@ -34,6 +36,8 @@ protected:
 
 	aie::OBJMesh		m_spearMesh;
 	glm::mat4			m_spearTransform;
+
+	aie::RenderTarget	m_renderTarget;
 
 	struct Light
 	{
