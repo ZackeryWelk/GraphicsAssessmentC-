@@ -30,7 +30,9 @@ protected:
 	aie::Texture m_gridTexture;
 
 	aie::ShaderProgram	m_shader;
+	aie::ShaderProgram	m_postShader;
 
+	Mesh				m_fullscreenMesh;
 	Mesh				m_quadMesh;
 	glm::mat4			m_quadTransform;
 

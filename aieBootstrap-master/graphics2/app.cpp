@@ -72,6 +72,26 @@ bool App::startup()
 		0, 0 ,1 ,0,
 		0, 0 ,0 ,1
 	};
+
+	if (m_renderTarget.initialise(1, getWindowWidth(), getWindowHeight()) == false)
+	{
+		printf("render target error!\n");
+		return false;
+	}
+
+	//create a fullscreen quad
+	m_fullscreenMesh.initialiseFullscreenQuad();
+
+	//load a post process shader
+	m_postShader.loadShader(aie::eShaderStage::VERTEX, "./shaders/post.vert");
+	m_postShader.loadShader(aie::eShaderStage::FRAGMENT, "./shaders/post.frag");
+
+	//WIP post process
+//	if (m_postShader.link() == false)
+//	{
+//		printf("post shader error: %s\n", m_postShader.getLastError());
+//		return false;
+//	}
 	return true;
 }
 
