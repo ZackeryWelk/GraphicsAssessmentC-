@@ -17,7 +17,7 @@ public:
 		glm::vec2 texCoord;
 
 	};
-
+	//generate buffers, bind vertex array and buffer, then fill the buffer, bind indicies if there are any, and then unbind the buffer
 	void initialise(unsigned int vertexCount, const Vertex* vertices, unsigned int indexCount = 0, unsigned int* indices = nullptr);
 	
 	//generates buffers, binds vertex array and buffer, fill vert buffer with defined verts for 2 triangles, unbind the buffer  
