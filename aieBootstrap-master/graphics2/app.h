@@ -22,7 +22,7 @@ public:
 
 
 protected:
-
+	//used to set up the camera
 	glm::mat4 m_viewMatrix;
 	glm::mat4 m_projectionMatrix;
 
