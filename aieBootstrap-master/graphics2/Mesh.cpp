@@ -142,7 +142,7 @@ void Mesh::initialiseFullscreenQuad()
 	glGenBuffers(1, &vbo);
 	glGenVertexArrays(1, &vao);
 
-	//bindvertex array aka a mesh wrapper
+	//bind vertex array aka a mesh wrapper
 	glBindVertexArray(vao);
 
 	//bind vertex buffer

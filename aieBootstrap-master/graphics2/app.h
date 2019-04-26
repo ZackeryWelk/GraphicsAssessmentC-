@@ -29,8 +29,10 @@ protected:
 
 	aie::Texture m_gridTexture;
 
+	//shader
 	aie::ShaderProgram	m_shader;
 	aie::ShaderProgram	m_postShader;
+
 
 	Mesh				m_fullscreenMesh;
 	Mesh				m_quadMesh;
@@ -41,16 +43,19 @@ protected:
 
 	aie::RenderTarget	m_renderTarget;
 
+	//light variables
 	struct Light
 	{
 		glm::vec3 direction;
 		glm::vec3 diffuse;
 		glm::vec3 specular;
 	};
+	//where multiple lights go
 	Light				m_light;
 	Light				m_light2;
 	glm::vec3			m_ambientLight;
 
+	//camera variables
 	float xEye;
 	float yEye;
 	float zEye;
@@ -59,6 +64,7 @@ protected:
 	float yCentre;
 	float zCentre;
 
+	//timer
 	float m_timer;
 };
 

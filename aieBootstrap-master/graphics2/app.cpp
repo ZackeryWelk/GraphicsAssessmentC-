@@ -34,7 +34,7 @@ bool App::startup()
 	m_shader.loadShader(aie::eShaderStage::VERTEX, "./shaders/phong.vert");
 	m_shader.loadShader(aie::eShaderStage::FRAGMENT, "./shaders/phong.frag");
 
-	
+	//linking and then loading shaders, textures and meshes
 	if (m_shader.link() == false)
 	{
 		printf("Shader Error: %s\n", m_shader.getLastError());
