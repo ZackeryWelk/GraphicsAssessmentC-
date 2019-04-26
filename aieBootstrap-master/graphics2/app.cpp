@@ -13,6 +13,7 @@ App::~App()
 
 bool App::startup()
 {
+	//setting the default position for the camera
 	xEye = 10;
 	yEye = 10;
 	zEye = 10;
@@ -65,6 +66,7 @@ bool App::startup()
 
 	m_quadMesh.initialiseQuad();
 
+	//transform of the object in scene
 	m_quadTransform =
 	{
 		1, 0 ,0 ,0,

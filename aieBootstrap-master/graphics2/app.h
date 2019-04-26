@@ -29,7 +29,7 @@ protected:
 
 	aie::Texture m_gridTexture;
 
-	//shader
+	//shaders
 	aie::ShaderProgram	m_shader;
 	aie::ShaderProgram	m_postShader;
 
@@ -64,8 +64,6 @@ protected:
 	float yCentre;
 	float zCentre;
 
-	//timer
-	float m_timer;
 };
 
 
